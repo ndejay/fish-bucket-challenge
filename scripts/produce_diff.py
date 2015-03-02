@@ -34,7 +34,8 @@ def compare_images(img1, img2):
 
 diffs=[]
 for i in range(0,len(imgs)-1):
-	diffs.append( compare_images(imgs[i], imgs[i+1]))
+    diffs.append( compare_images(imgs[i], imgs[i+1]))
+    imsave("../results/out%04d.png" % i  ,diffs[-1])
 
 all_stuff = np.max(diffs, axis=0)
 all_stuff = all_stuff #/ np.max(all_stuff)
@@ -42,8 +43,7 @@ print folder
 
 
 
-#imsave("results/out%04d.png" % nb  ,diff)
-imsave("results/sum_%s.png" % folder.split('/')[-1] ,all_stuff)
+imsave("../results/sum.png"  ,all_stuff)
 
 
 
