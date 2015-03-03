@@ -9,16 +9,20 @@ capture <- lapply(video_list, function (x) {
   interpolation[, 1] <- as.numeric(interpolation[, 1])
   interpolation[, 2] <- as.numeric(interpolation[, 2])
 
-  velocity <- Reduce(f = c, x = sapply(1:(nrow(interpolation) - 1), function (i) {
+  distance <- Reduce(f = c, x = sapply(1:(nrow(interpolation) - 1), function (i) {
     j <- i + 1
-    sqrt( sum(interpolation[i, 1:2]**2 - interpolation[j, 1:2]**2) )
+    d_x <- (interpolation[i, 1] - interpolation[j, 1]) ** 2
+    d_y <- (interpolation[i, 2] - interpolation[j, 2]) ** 2
+    sqrt(sum(d_x, d_y))
   }))
-  output_file <- paste('../data/output_videos/', video_basename, '-velocity.csv', sep = '')
-  write.csv(x = velocity, file = output_file, row.names = F)
-
-  meanVelocity <- mean(velocity, na.rm = TRUE)
-  output_file <- paste('../data/output_videos/', video_basename, '-meanVelocity.csv', sep = '')
-  write.csv(x = meanVelocity, file = output_file, row.names = F)
+  out <- data.frame('X'              = interpolation[, 1],
+                    'Y'              = interpolation[, 2],
+                    'DISTANCE'       = c(NA, distance),
+                    'MAX_DISTANCE'   = max(distance, na.rm = TRUE),
+                    'MEAN_DISTANCE'  = mean(distance, na.rm = TRUE),
+                    'TOTAL_DISTANCE' = sum(distance, na.rm = TRUE))
+  output_file <- paste('../data/output_videos/', video_basename, '-stats.csv', sep = '')
+  write.csv(x = out, file = output_file, row.names = F)
 
   NULL
 })
