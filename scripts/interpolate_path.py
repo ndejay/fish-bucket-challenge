@@ -15,9 +15,9 @@ def interpolate(dat):
             if dat[i-1][0] == -1 or dat[i+1][0] == -1 :
                 out.append([-1,-1,-1])
                 continue
-        out.append([(dat[i-1][0] + dat[i+1][0])/2.,(dat[i-1][1] + dat[i+1][1])/2. ,r])
-    else:
-        out.append([x, y, r])
+            out.append([(dat[i-1][0] + dat[i+1][0])/2.,(dat[i-1][1] + dat[i+1][1])/2. ,r])
+        else:
+            out.append([x, y, r])
 
     return out
 
