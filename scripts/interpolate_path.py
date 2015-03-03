@@ -3,13 +3,9 @@
 import numpy as np
 import sys
 
-
-file_path = sys.argv[1]
-file_out_path = sys.argv[2]
-dat = np.loadtxt(file_path, delimiter = ',')
-
-out = []
-for i in range(len(dat)):
+def interpolate(dat):
+    out = []
+    for i in range(len(dat)):
     x,y,r = dat[i]
     if x == -1:
         print i, len(dat)
@@ -19,9 +15,17 @@ for i in range(len(dat)):
         if dat[i-1][0] == -1 or dat[i+1][0] == -1 :
             out.append([-1,-1,-1])
             continue
-	out.append([(dat[i-1][0] + dat[i+1][0])/2.,(dat[i-1][1] + dat[i+1][1])/2. ,r])
+        out.append([(dat[i-1][0] + dat[i+1][0])/2.,(dat[i-1][1] + dat[i+1][1])/2. ,r])
     else:
         out.append([x, y, r])
 
+    return out
 
-np.savetxt(file_out_path, out, delimiter =',')
+if __name__ == "__main__":
+    file_path = sys.argv[1]
+    file_out_path = sys.argv[2]
+    dat = np.loadtxt(file_path, delimiter = ',')
+
+    out = interpolate(dat)
+
+    np.savetxt(file_out_path, out, delimiter =',')

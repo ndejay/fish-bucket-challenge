@@ -9,6 +9,7 @@ import scripts.interpolate_fish_positions as ifp
 import matplotlib.pyplot as plt
 
 from scripts.Image import Image
+import scripts.interpolate_path as interpolate_path
 from scipy.misc import imread, imsave
 from os.path import isfile, join
 from skimage.color import rgb2gray
@@ -45,7 +46,9 @@ if __name__ == "__main__":
 
     traj = pre_traj + ifp.compute_trajectory(frames, ifp.maximum_outlier(frames[-1]))
 
-    np.savetxt(output_file, traj, delimiter=',')
+    interpolated = interpolate_path.interpolate(traj)
+
+    np.savetxt(output_file, interpolated, delimiter=',')
 
     #fig = plt.figure()
     #ax = fig.add_subplot(1, 1, 1)
