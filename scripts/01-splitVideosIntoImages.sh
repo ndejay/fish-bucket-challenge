@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # for each avi file in the data, we create a similarly named directory (without
 # the avi file extension) and split out all the images there, in sequence.
