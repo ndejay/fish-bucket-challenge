@@ -29,19 +29,22 @@ if __name__ == "__main__":
     print len(baselined_diffs)
 
     frames = []
-    for i, b in enumerate(baselined_diffs[1:]):
+    for i, b in enumerate(baselined_diffs):
         imsave('data/dump' + str(i) + '.png', b)
         blobs = Image(b).make_blobs(4, 5, 0.04)
         bl = blobs.blobs
         print len(bl)
         frames.append(bl)
 
+    pre_traj = [] # the skipped frames on the beginning.
+
     # keep pulling off the first element if it has no blobs
     while not len(frames[-1]):
         print "skipped a frame"
+        pre_traj.append( (-1, -1, -1) )
         frames.pop(-1)
 
-    traj = ifp.compute_trajectory(frames, ifp.maximum_outlier(frames[-1]))
+    traj = pre_traj + ifp.compute_trajectory(frames, ifp.maximum_outlier(frames[-1]))
 
     np.savetxt(output_file, traj, delimiter=',')
 
