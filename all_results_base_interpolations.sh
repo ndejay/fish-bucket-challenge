@@ -1,10 +1,9 @@
 #!/bin/bash
 
-mkdir -p data/results_base_interpolations
-for f in data/results_base/*.avi ; do
+mkdir -p data/PIPELINE
+for f in data/images/*.avi ; do
     echo "$f"
-    scripts/interpolate_fish_positions.py "$f" "data/results_base_interpolations/$(echo "$f" | sed 's/\///g')" 5-25 &
+    ./driver.py "$f" "data/PIPELINE/$(echo "$f" | sed 's/\///g')"
 done
-
 
 wait
