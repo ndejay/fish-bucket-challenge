@@ -30,7 +30,6 @@ if __name__ == "__main__":
 
     frames = []
     for i, b in enumerate(baselined_diffs):
-        imsave('data/dump' + str(i) + '.png', b)
         blobs = Image(b).make_blobs(4, 5, 0.04)
         bl = blobs.blobs
         print len(bl)
