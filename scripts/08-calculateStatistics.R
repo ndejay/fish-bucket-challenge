@@ -5,7 +5,7 @@ library('stringr')
 video_list <- Sys.glob('../data/input_videos/*')
 capture <- lapply(video_list, function (x) {
   video_basename <- str_match(x, ".*/([0-9 .-_a-zA-Z]*)")[2]
-  interpolation <- read.csv(paste('../data/PIPELINE/dataimages', video_basename, '-interpolated', sep = ''))
+  interpolation <- read.csv(paste('../data/PIPELINE/dataimages', video_basename, sep = ''))
   interpolation[, 1] <- as.numeric(interpolation[, 1])
   interpolation[, 2] <- as.numeric(interpolation[, 2])
 
