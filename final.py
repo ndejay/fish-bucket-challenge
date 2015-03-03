@@ -11,7 +11,7 @@ for video in video_list:
   image_container = "%s/%s" % (video_container, video)
   image_list      = os.listdir("%s" % image_container)
 
-  interpolation_filename = "data/PIPELINE/dataimages%s-interpolated" % video
+  interpolation_filename = "data/PIPELINE/dataimages%s" % video
   interpolation = np.loadtxt(interpolation_filename, delimiter = ",")[::-1]
 
   for i in xrange(0, len(image_list)):
