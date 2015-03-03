@@ -25,12 +25,20 @@ class Image(object):
 
     def saveFig(self, filename):
         fig, ax = plt.subplots(1, 1)
+        a = fig.gca()
+        a.set_frame_on(False)
+        a.set_xticks([])
+        a.set_yticks([])
+        plt.axis('off')
+        ax.set_frame_on(False)
         ax.imshow(self.img)
         for blob in self.blobs:
             y, x, r = blob
             c = plt.Circle((x, y), r, linewidth = 2, color = 'red')
             ax.add_patch(c)
-        fig.savefig(filename)
+        dpi = 100
+        fig.set_size_inches(self.img.shape[0] / dpi, self.img.shape[1] / dpi)
+        fig.savefig(filename, bbox_inches = 'tight', pad_inches= 0 )
         return self
 
     def saveBlobs(self, filename):
