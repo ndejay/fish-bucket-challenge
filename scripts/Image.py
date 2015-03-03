@@ -11,8 +11,17 @@ class Image(object):
     def load(self, filename):
         self.img = skimage.io.imread(filename)
 
-    def save(self, filename):
+    def saveImage(self, filename):
         skimage.io.imsave(filename, img)
+
+    def saveFig(self, filename):
+        fig, ax = pyplot.matplotlib.subplots(1, 1)
+        ax.imshow(self.image)
+        for blob in blobs:
+            y, x, r = blob
+            c = plt.Circle((x, y), r, linewidth = 2, color = 'red')
+            ax.add_patch(c)
+        fig.savefig(filename) 
 
     def saveBlobs(self, filename):
 	    numpy.savetxt(filename, self.blobs, delimiter = ",")
