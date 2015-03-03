@@ -78,7 +78,7 @@ if __name__ == "__main__":
     output_path = sys.argv[2]
 
     if len(sys.argv) == 4:
-        cutoff_limit = map(int, sys.argv[4].split('-'))
+        cutoff_limit = map(int, sys.argv[3].split('-'))
     else:
         cutoff_limit = (0, 1)
 
@@ -100,6 +100,8 @@ if __name__ == "__main__":
 
         ax.plot(*zip(*map(lambda x: _flip(x[:2]), traj)))
 
-    fig.savefig('data/asdf.png')
+    p = output_path + '.png'
+    print p
+    fig.savefig(p)
 
 # vim: set ts=4 sw=4 expandtab

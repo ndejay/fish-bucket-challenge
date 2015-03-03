@@ -7,8 +7,7 @@ import os
 import numpy as np
 
 from scipy.misc import imread, imsave
-from scipy.linalg import norm
-from scipy import sum, average
+from scipy import average
 
 
 
@@ -22,7 +21,7 @@ def to_grayscale(arr):
 def get_one_baseline(base_img, other_img):
     diff = base_img - other_img  # elementwise for scipy arrays
     diff[diff <= 0 ] = 0
-    return diff 
+    return diff
 
 def get_all_baseline(base_img, other_imgs):
     return map(lambda x : get_one_baseline(base_img, x), other_imgs )
