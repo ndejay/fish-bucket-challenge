@@ -4,6 +4,7 @@ from skimage.feature import blob_dog
 from math import sqrt
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.lines import Line2D
 
 class Image(object):
     img   = []
@@ -36,6 +37,30 @@ class Image(object):
             c = plt.Circle((x, y), r, linewidth = 2, color = 'red')
             ax.add_patch(c)
         dpi = 100
+        fig.set_size_inches(self.img.shape[0] / dpi, self.img.shape[1] / dpi)
+        fig.savefig(filename, bbox_inches = 'tight', pad_inches= 0 )
+        return self
+
+    def saveFigWithTrajectory(self, filename, trajectory):
+        fig, ax = plt.subplots(1, 1)
+        a = fig.gca()
+        a.set_frame_on(False)
+        a.set_xticks([])
+        a.set_yticks([])
+        plt.axis('off')
+        ax.set_frame_on(False)
+        ax.imshow(self.img)
+        last_y, last_x, last_r = -1, -1, -1
+        for point in trajectory:
+            y, x, r = point
+            if y != -1 and x != -1:
+            	c = plt.Circle((x, y), 1.5, linewidth = 2, color = 'red')
+            	ax.add_patch(c)
+                if last_y != -1 and last_x != -1:
+                    l = plt.Line2D((last_x, x), (last_y, y), linewidth = 1, color = 'red')
+                    plt.gca().add_line(l)
+                last_y, last_x, last_r = y, x, r
+        dpi = 50
         fig.set_size_inches(self.img.shape[0] / dpi, self.img.shape[1] / dpi)
         fig.savefig(filename, bbox_inches = 'tight', pad_inches= 0 )
         return self
