@@ -3,6 +3,7 @@
 import os
 import sys
 
+import numpy as np
 import scripts.produce_diff as diffs
 import scripts.interpolate_fish_positions as ifp
 import matplotlib.pyplot as plt
@@ -17,6 +18,7 @@ def _flip( (x, y) ):
 
 if __name__ == "__main__":
     folder = sys.argv[1]
+    output_file = sys.argv[2]
 
     onlyfiles = sorted([ f for f in os.listdir(folder) if isfile(join(folder,f)) and f.endswith(".png") ])
     imgs = map( lambda x : rgb2gray(imread(x)).astype(float), [ os.path.join(folder ,  "%04d.png" % nb) for nb in range(1,len(onlyfiles)+1) ] )
@@ -32,7 +34,6 @@ if __name__ == "__main__":
         blobs = Image(b).make_blobs(4, 5, 0.04)
         bl = blobs.blobs
         print len(bl)
-
         frames.append(bl)
 
     # keep pulling off the first element if it has no blobs
@@ -42,11 +43,11 @@ if __name__ == "__main__":
 
     traj = ifp.compute_trajectory(frames, ifp.maximum_outlier(frames[-1]))
 
-    print traj
+    np.savetxt(output_file, traj, delimiter=',')
 
-    fig = plt.figure()
-    ax = fig.add_subplot(1, 1, 1)
-    ax.set_ylim(bottom=480, top=0)
-    ax.set_xlim(left=0, right=640)
-    ax.plot(*zip(*map(lambda x: _flip(x[:2]), traj)))
-    fig.savefig('data/asdf.png')
+    #fig = plt.figure()
+    #ax = fig.add_subplot(1, 1, 1)
+    #ax.set_ylim(bottom=480, top=0)
+    #ax.set_xlim(left=0, right=640)
+    #ax.plot(*zip(*map(lambda x: _flip(x[:2]), traj)))
+    #fig.savefig('data/asdf.png')
