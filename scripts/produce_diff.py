@@ -1,4 +1,5 @@
 #usage: python produce_diff.py foldername
+#or this: ls ../data/frames/jerrington.me\:15000/ | while read i ; do echo $i ; mkdir -p ../results_base/"$i"; python produce_diff.py "../data/frames/jerrington.me:15000/$i" ; done
 from os import listdir
 from os.path import isfile, join
 import sys
@@ -34,8 +35,8 @@ def compare_images(img1, img2):
 
 diffs=[]
 for i in range(0,len(imgs)-1):
-    diffs.append( compare_images(imgs[i], imgs[i+1]))
-    imsave("../results/out%04d.png" % i  ,diffs[-1])
+    diffs.append( compare_images(imgs[0], imgs[i]))
+    imsave("../results_base/%s/out%04d.png" % (os.path.basename(folder),i)  ,diffs[-1])
 
 all_stuff = np.max(diffs, axis=0)
 all_stuff = all_stuff #/ np.max(all_stuff)
@@ -43,7 +44,7 @@ print folder
 
 
 
-imsave("../results/sum.png"  ,all_stuff)
+#imsave("../results/sum.png"  ,all_stuff)
 
 
 
