@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
     frames = []
     for i, b in enumerate(baselined_diffs):
-        blobs = Image(b).make_blobs(4, 5, 0.04)
+        blobs = Image(b).make_blobs(2, 5, 0.02)
         bl = blobs.blobs
         print len(bl)
         frames.append(bl)
