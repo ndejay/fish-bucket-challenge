@@ -1,6 +1,12 @@
+from skimage.color import rgb2gray
+from skimage.io import imread
+from skimage.io import imsave
+from skimage.feature import blob_dog
+import matplotlib.pyplot as plt
+import numpy as np
 
 class Image(object):
-    img
+    img = []
     blobs = []
 
     def __init__(self, img, blobs = None):
@@ -9,13 +15,13 @@ class Image(object):
             self.blobs = blobs
 
     def load(self, filename):
-        self.img = skimage.io.imread(filename)
+        self.img = imread(filename)
 
     def saveImage(self, filename):
-        skimage.io.imsave(filename, img)
+        imsave(filename, self.img)
 
     def saveFig(self, filename):
-        fig, ax = pyplot.matplotlib.subplots(1, 1)
+        fig, ax = plt.subplots(1, 1)
         ax.imshow(self.image)
         for blob in blobs:
             y, x, r = blob
@@ -24,16 +30,16 @@ class Image(object):
         fig.savefig(filename) 
 
     def saveBlobs(self, filename):
-	    numpy.savetxt(filename, self.blobs, delimiter = ",")
+	    np.savetxt(filename, self.blobs, delimiter = ",")
 
     def gray(self):
-        return Image(skimage.color.rgb2gray(self.img))
+        return Image(rgb2gray(self.img))
     
     def inverse(self):
         return Image(1 - self.img)
 
     def blobs(self, max_sigma, threshold):
-        blobs = skimage.feature.blob_dog(self.gray, max_sigma = max_sigma, threshold = threshold)
+        blobs = blob_dog(self.gray, max_sigma = max_sigma, threshold = threshold)
         blobs[:, 2] = blobs[:, 2] * sqrt(2)
         return Image(self.img, blobs)
 
