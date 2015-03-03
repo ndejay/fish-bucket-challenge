@@ -5,5 +5,5 @@ for f in ../data/images/*.avi ; do
     p="$(basename "$f")"
     d="../data/output_videos/"
     mkdir -p "$d"
-    echo ffmpeg -f image2 -i "$f"/final_%03d.png -r 12 -s WxH "$d$p"
+    echo ffmpeg -f image2 -i "$f"/final_%04d.png -r 12 -s WxH "$d$p"
 done

@@ -21,7 +21,7 @@ if __name__ == "__main__":
     output_file = sys.argv[2]
 
     onlyfiles = sorted([ f for f in os.listdir(folder) if isfile(join(folder,f)) and f.endswith(".png") ])
-    imgs = map( lambda x : rgb2gray(imread(x)).astype(float), [ os.path.join(folder ,  "%04d.png" % nb) for nb in range(1,len(onlyfiles)+1) ] )
+    imgs = map( lambda x : rgb2gray(imread(x)).astype(float), [ os.path.join(folder ,  "static_%04d.png" % nb) for nb in range(1,len(onlyfiles)+1) ] )
 
     # reverse them so we can start from the end
     baselined_diffs = diffs.get_all_baseline(imgs[0], imgs)
