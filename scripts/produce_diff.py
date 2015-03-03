@@ -9,8 +9,6 @@ import numpy as np
 from skimage.io import imread, imsave
 from scipy import average
 
-
-
 def to_grayscale(arr):
     "If arr is a color image (3D array), convert it to grayscale (2D array)."
     if len(arr.shape) == 3:
@@ -21,6 +19,7 @@ def to_grayscale(arr):
 def get_one_baseline(base_img, other_img):
     diff = base_img - other_img  # elementwise for scipy arrays
     diff[diff <= 0 ] = 0
+    diff[0][0] = 0
     return diff
 
 def get_all_baseline(base_img, other_imgs):

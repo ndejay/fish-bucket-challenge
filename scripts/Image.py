@@ -1,6 +1,5 @@
 from skimage.color import rgb2gray
-from skimage.io import imread
-from skimage.io import imsave
+from scipy.misc import imread, imsave
 from skimage.feature import blob_dog
 from math import sqrt
 import matplotlib.pyplot as plt
@@ -51,14 +50,11 @@ class Image(object):
     def inverse(self):
         return Image(1 - self.img)
 
-    def make_blobs(self, max_sigma, threshold):
+    def make_blobs(self, min_sigma, max_sigma, threshold):
         try:
-            blobs = blob_dog(self.img, max_sigma = max_sigma, threshold = threshold)
-            if len(blobs):
-                blobs[:, 2] = blobs[:, 2] * sqrt(2)
-                return Image(self.img, blobs)
-            else:
-                return self
+            blobs = blob_dog(self.img, min_sigma = min_sigma, max_sigma = max_sigma, threshold = threshold)
+            blobs[:, 2] = blobs[:, 2] * sqrt(2)
+            return Image(self.img, blobs)
         except:
             return self
 
