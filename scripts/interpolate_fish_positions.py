@@ -41,11 +41,7 @@ def compute_trajectory(frames, fish):
     """ Given a list of frames to analyze and a starting blob for a fish in
         the first frame, compute its trajectory.
     """
-    # start with the last frame.
-    # We want to find the one that's the furthest away, according to the pairwise distance with the other blobs.
-    last_frame = frames_with_cutoff[-1]
-
-    best_blob = maximum_outlier(last_frame)
+    best_blob = fish
 
     # this best blob is in fact the last position of the fish (since we were looking at the last frame)
     reversed_fish_positions = [fish] # for better names
@@ -55,7 +51,7 @@ def compute_trajectory(frames, fish):
         y2, x2, r2 = blob
         return sqrt((x2 - x1)**2 + (y2 - y1)**2)
 
-    for frame in reversed(frames_with_cutoff[:-1]):
+    for frame in reversed(frames[:-1]):
         blobs_and_distances = filter(lambda x: x[1] <= THRESHOLD, it.imap(lambda x: (x, last_dist(x)), frame))
 
         if blobs_and_distances: # there needs to be at least one candidate fish, according to our threshold

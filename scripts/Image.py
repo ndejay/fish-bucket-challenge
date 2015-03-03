@@ -51,10 +51,16 @@ class Image(object):
     def inverse(self):
         return Image(1 - self.img)
 
-    def blobs(self, max_sigma, threshold):
-        blobs = blob_dog(self.gray().img, max_sigma = max_sigma, threshold = threshold)
-        blobs[:, 2] = blobs[:, 2] * sqrt(2)
-        return Image(self.img, blobs)
+    def make_blobs(self, max_sigma, threshold):
+        try:
+            blobs = blob_dog(self.img, max_sigma = max_sigma, threshold = threshold)
+            if len(blobs):
+                blobs[:, 2] = blobs[:, 2] * sqrt(2)
+                return Image(self.img, blobs)
+            else:
+                return self
+        except:
+            return self
 
     def __sub__(self, image):
         return Image(self.img- image.img)

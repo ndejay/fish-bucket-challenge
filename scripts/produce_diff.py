@@ -6,7 +6,7 @@ import sys
 import os
 import numpy as np
 
-from scipy.misc import imread, imsave
+from skimage.io import imread, imsave
 from scipy import average
 
 
