@@ -56,6 +56,8 @@ def compute_trajectory(frames, fish):
 
         if blobs_and_distances: # there needs to be at least one candidate fish, according to our threshold
             reversed_fish_positions.append(min(blobs_and_distances, key=lambda x: x[1])[0])
+        else:
+            reversed_fish_positions.append((-1, -1, -1))
 
     return reversed_fish_positions
 
